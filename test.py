@@ -74,7 +74,7 @@ def evaluate_one_image(image_array):
 # ------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    img = Image.open(r'D:\MyProjects\inpute_date\daxiang\26.jpg')
+    img = Image.open(r'D:\MyProjects\inpute_date\houzi\23.jpg')
     plt.imshow(img)
     # plt.show()
     imag = img.resize([112, 112])

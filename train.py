@@ -10,7 +10,7 @@ IMG_W = 112  # resize图像，太大的话训练时间久
 IMG_H = 112
 BATCH_SIZE = 20
 CAPACITY = 200
-MAX_STEP = 500  # 一般大于10K
+MAX_STEP = 1000  # 一般大于10K
 learning_rate = 0.0001  # 一般小于0.0001
 
 # 获取批次batch
@@ -18,7 +18,8 @@ train_dir = r'D:\MyProjects\inpute_date'  # 训练样本的读入路径
 logs_train_dir = r'D:\MyProjects\understand\save'  # logs存储路径
 logs_test_dir = r'D:\PyCharm\KinZhang_First_ImageDetection\generate_data'
 # train, train_label = input_data.get_files(train_dir)
-train, train_label, val, val_label = input_data.get_files(train_dir, 0.1)
+train, train_label, val, val_label = input_data.get_files(train_dir, 0.2)
+print(val)
 # 训练数据及标签
 train_batch, train_label_batch = input_data.get_batch(train, train_label, IMG_W, IMG_H, BATCH_SIZE, CAPACITY)
 # 测试数据及标签
