@@ -1,6 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 from keras.models import Sequential, load_model
 from keras.layers import BatchNormalization
 from keras.layers.convolutional import Conv2D
@@ -15,7 +18,6 @@ from keras.optimizers import Adam
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint
 from keras import  regularizers
-import os
 import json
 from codecs import open
 from keras.applications.vgg16 import VGG16
@@ -62,7 +64,7 @@ def VGG(weights_path=None):
     return model
 
 PATCH_SIZE = 64
-NB_EPOCH = 100
+NB_EPOCH = 10
 BATCH_SIZE = 256
 VERBOSE = 1
 OPTIMIZER = Adam(lr=0.001)
