@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
-import model
-from input_data import get_files
+import model_2
+from inpute_date_2 import get_files
 from PIL import Image
 import numpy as np
 import tensorflow as tf
 import os
+import index
+
 # 获取一张图片
 def get_one_image(train):
     # 输入参数：train,训练图片的路径
@@ -21,24 +23,26 @@ def get_one_image(train):
 
 
 # 测试图片
-def evaluate_one_image(image_array):
+def evaluate_one_image(image_array,_index):
+    label = index.index()
     with tf.Graph().as_default():
         BATCH_SIZE = 1
-        N_CLASSES = 8
+
+        N_CLASSES = len(label)
 
         image = tf.cast(image_array, tf.float32)
         image = tf.image.per_image_standardization(image)
         image = tf.reshape(image, [1, 112, 112, 3])
 
-        logit = model.inference(image, BATCH_SIZE, N_CLASSES)
+        logit = model_2.inference(image, BATCH_SIZE, N_CLASSES)
 
         logit = tf.nn.softmax(logit)
 
         x = tf.placeholder(tf.float32, shape=[112, 112, 3])
 
         # you need to change the directories to yours.
-        logs_train_dir = r'D:\MyProjects\understand\save'
-        logs_train_dir =os.path.join(os.getcwd(),'..','understand','save')
+        logs_train_dir = r'D:\MyProjects\understand\save_2'
+        logs_train_dir = os.path.join(os.getcwd(),'..\\','understand','save_2')
         print(logs_train_dir)
         saver = tf.train.Saver()
 
@@ -58,35 +62,23 @@ def evaluate_one_image(image_array):
 
             prediction = sess.run(logit, feed_dict={x: image_array})
             max_index = np.argmax(prediction)
-            if max_index == 0:
-                result = ('这是长颈鹿的可能性为： %.6f' % prediction[:, 0])
-            elif max_index == 1:
-                result = ('这是大象的可能性为： %.6f' % prediction[:, 1])
-            elif max_index == 2:
-                result = ('这是猴子的可能性为： %.6f' % prediction[:, 2])
-            elif max_index == 3:
-                result = ('这是生姜的可能性为： %.6f' % prediction[:, 3])
-            elif max_index == 4:
-                result = ('这是井盖的可能性为： %.6f' % prediction[:, 4])
-            elif max_index == 5:
-                result = ('这是五角星的可能性为： %.6f' % prediction[:, 5])
-            elif max_index == 6:
-                result = ('这是乌龟的可能性为： %.6f' % prediction[:, 6])
-            else:
-                result = ('这是书的可能性为： %.6f' % prediction[:, 7])
-            print(prediction)
+            for i in range(len(label)):
+                if max_index == i:
+                    # result = ('这是{}的可能性为：'.format(label[str(i)]) + '%.6f' % prediction[:, i])
+                    print(label[str(i)] + '-' + str(_index))
 
-            return result
+            # return result
 
 
 # ------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    img = Image.open(r'D:\MyProjects\inpute_date\wugui\34.jpg')
+    label = index.index()
+    img = Image.open(r'D:\MyProjects\inpute_date_2\9_4.jpg')
     plt.imshow(img)
     plt.show()
     imag = img.resize([112, 112])
     image = np.array(imag)
-    print(evaluate_one_image(image))
+    print(evaluate_one_image(image,0))
 
 

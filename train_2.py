@@ -1,41 +1,46 @@
-import input_data
-import model
+import inpute_date_2
+import model_2
 import tensorflow as tf
 import numpy as np
 import os
-
+import index
+import time
 # 变量声明
-N_CLASSES = 8  # 四种花类型
+label = index.index()
+N_CLASSES = len(label) # 四种花类型
 IMG_W = 112  # resize图像，太大的话训练时间久
 IMG_H = 112
 BATCH_SIZE = 20
 CAPACITY = 200
-MAX_STEP = 500  # 一般大于10K
+MAX_STEP = 15001  # 一般大于10K
 learning_rate = 0.0001  # 一般小于0.0001
 
 # 获取批次batch
-train_dir = r'D:\MyProjects\inpute_date'  # 训练样本的读入路径
-logs_train_dir = r'D:\MyProjects\understand\save'  # logs存储路径
-logs_test_dir = r'D:\PyCharm\KinZhang_First_ImageDetection\generate_data'
+# train_dir = r'D:\MyProjects\inpute_date_2'  # 训练样本的读入路径
+train_dir = os.path.join(os.getcwd(),'inpute_date_2')  # 训练样本的读入路径
+# logs_train_dir = r'D:\MyProjects\understand\save_2'  # logs存储路径
+logs_train_dir = os.path.join(os.getcwd(),'understand','save_2')  # logs存储路径
+# logs_test_dir = r'D:\PyCharm\KinZhang_First_ImageDetection\generate_data_2'
+logs_test_dir = os.path.join(os.getcwd(),'understand','generate_data_2')
 # train, train_label = input_data.get_files(train_dir)
-train, train_label, val, val_label = input_data.get_files(train_dir, 0.2)
-print(val)
+train, train_label, val, val_label = inpute_date_2.get_files(train_dir, 0.2)
+# print(val)
 # 训练数据及标签
-train_batch, train_label_batch = input_data.get_batch(train, train_label, IMG_W, IMG_H, BATCH_SIZE, CAPACITY)
+train_batch, train_label_batch = inpute_date_2.get_batch(train, train_label, IMG_W, IMG_H, BATCH_SIZE, CAPACITY)
 # 测试数据及标签
-val_batch, val_label_batch = input_data.get_batch(val, val_label, IMG_W, IMG_H, BATCH_SIZE, CAPACITY)
+val_batch, val_label_batch = inpute_date_2.get_batch(val, val_label, IMG_W, IMG_H, BATCH_SIZE, CAPACITY)
 
 # 训练操作定义
-train_logits = model.inference(train_batch, BATCH_SIZE, N_CLASSES)
-train_loss = model.losses(train_logits, train_label_batch)
-train_op = model.trainning(train_loss, learning_rate)
-train_acc = model.evaluation(train_logits, train_label_batch)
+train_logits = model_2.inference(train_batch, BATCH_SIZE, N_CLASSES)
+train_loss = model_2.losses(train_logits, train_label_batch)
+train_op = model_2.trainning(train_loss, learning_rate)
+train_acc = model_2.evaluation(train_logits, train_label_batch)
 
 # 测试操作定义
-test_logits = model.inference(val_batch, BATCH_SIZE, N_CLASSES)
-test_loss = model.losses(test_logits, val_label_batch)
-test_acc = model.evaluation(test_logits, val_label_batch)
-test_op = model.trainning(test_loss,learning_rate)
+test_logits = model_2.inference(val_batch, BATCH_SIZE, N_CLASSES)
+test_loss = model_2.losses(test_logits, val_label_batch)
+test_acc = model_2.evaluation(test_logits, val_label_batch)
+test_op = model_2.trainning(test_loss,learning_rate)
 
 # 这个是log汇总记录
 summary_op = tf.summary.merge_all()
@@ -81,4 +86,3 @@ finally:
     coord.request_stop()
 
 
-print(test_acc1)

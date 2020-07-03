@@ -1,4 +1,3 @@
-
 import os
 import math
 import numpy as np
@@ -6,69 +5,35 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 # -----------------生成图片路径和标签的List------------------------------------
-train_dir = r'D:\MyProjects\inpute_date'
+train_dir = r'D:\MyProjects\inpute_date_2'
 
-changjinglu = []
-label_changjinglu = []
-daxiang = []
-label_daxiang = []
-houzi = []
-label_houzi = []
-shengjiang = []
-label_shengjiang = []
-jinggai = []
-label_jinggai = []
-wujiaoxing = []
-label_wujiaoxing = []
-wugui = []
-label_wugui = []
-shu = []
-label_shu = []
+
+train_image = []
+train_label = []
 
 # step1：获取所有的图片路径名，存放到
 # 对应的列表中，同时贴上标签，存放到label列表中。
 def get_files(file_dir, ratio):
-    
-    for file in os.listdir(file_dir + r'\changjinglu'):
-        changjinglu.append(file_dir + r'\changjinglu' + '\\' + file)
-        label_changjinglu.append(0)
-    for file in os.listdir(file_dir + r'\daxiang'):
-        daxiang.append(file_dir + r'\daxiang' + '\\' + file)
-        label_daxiang.append(1)
-    for file in os.listdir(file_dir + r'\houzi'):
-        houzi.append(file_dir + r'\houzi' + '\\' + file)
-        label_houzi.append(2)
-    for file in os.listdir(file_dir + r'\shengjiang'):
-        shengjiang.append(file_dir + r'\shengjiang' + '\\' + file)
-        label_shengjiang.append(3)
-    for file in os.listdir(file_dir + r'\jinggai'):
-        jinggai.append(file_dir + r'\jinggai' + '\\' + file)
-        label_jinggai.append(4)
-    for file in os.listdir(file_dir + r'\wujiaoxing'):
-        wujiaoxing.append(file_dir + r'\wujiaoxing' + '\\' + file)
-        label_wujiaoxing.append(5)
-    for file in os.listdir(file_dir + r'\wugui'):
-        wugui.append(file_dir + r'\wugui' + '\\' + file)
-        label_wugui.append(6)
-    for file in os.listdir(file_dir + r'\shu'):
-        shu.append(file_dir + r'\shu' + '\\' + file)
-        label_shu.append(6)
 
-        # step2：对生成的图片路径和标签List做打乱处理
-    image_list = np.hstack((changjinglu, daxiang, houzi, shengjiang, jinggai, wujiaoxing, wugui, shu))
-    label_list = np.hstack((label_changjinglu, label_daxiang, label_houzi, label_shengjiang, label_jinggai, label_wujiaoxing,
-                            label_wugui, label_shu))
+    for file in os.listdir(file_dir):
+        # train_image.append(file_dir + '\\' + file)
+        train_image.append(os.path.join(file_dir,file))
+        train_label.append(file.split('_')[0])
+
+    # step2：对生成的图片路径和标签List做打乱处理
+    # hstack()横向展开，vstack()是纵向排列
+    image_list = np.hstack((train_image))
+    label_list = np.hstack((train_label))
 
     # 利用shuffle打乱顺序
     temp = np.array([image_list, label_list])
     temp = temp.transpose()
     np.random.shuffle(temp)
 
-
     # 将所有的img和lab转换成list
     all_image_list = list(temp[:, 0])
     all_label_list = list(temp[:, 1])
-        # 将所得List分为两部分，一部分用来训练tra，一部分用来测试val
+    # 将所得List分为两部分，一部分用来训练tra，一部分用来测试val
     # ratio是测试集的比例
     n_sample = len(all_label_list)
     n_val = int(math.ceil(n_sample * ratio))  # 测试样本数
@@ -92,7 +57,6 @@ def get_files(file_dir, ratio):
 #   设置batch_size：每个batch要放多少张图片
 #   capacity：一个队列最大多少
 # 定义函数get_batch, 生成训练批次数据
-
 
 def get_batch(image, label, image_W, image_H, batch_size, capacity):
     # 转换类型
