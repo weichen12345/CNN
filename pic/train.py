@@ -62,8 +62,8 @@ def VGG(weights_path=None):
     return model
 
 PATCH_SIZE = 64
-NB_EPOCH = 10000
-BATCH_SIZE = 1024
+NB_EPOCH = 100
+BATCH_SIZE = 256
 VERBOSE = 1
 OPTIMIZER = Adam(lr=0.001)
 NB_CLASSES = 143
