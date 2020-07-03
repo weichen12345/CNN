@@ -17,7 +17,7 @@ learning_rate = 0.0001  # 一般小于0.0001
 
 # 获取批次batch
 # train_dir = r'D:\MyProjects\inpute_date_2'  # 训练样本的读入路径
-train_dir = os.path.join(os.getcwd(),'inpute_date_2')  # 训练样本的读入路径
+train_dir = os.path.join(os.getcwd(),'input_data_2')  # 训练样本的读入路径
 # logs_train_dir = r'D:\MyProjects\understand\save_2'  # logs存储路径
 logs_train_dir = os.path.join(os.getcwd(),'understand','save_2')  # logs存储路径
 # logs_test_dir = r'D:\PyCharm\KinZhang_First_ImageDetection\generate_data_2'
