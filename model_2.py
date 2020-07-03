@@ -1,6 +1,6 @@
 import tensorflow as tf
 import os
-# os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # 这一行注释掉就是使用cpu，不注释就是使用gpu
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # 这一行注释掉就是使用cpu，不注释就是使用gpu
 #定义函数infence，定义CNN网络结构
 #卷积神经网络，卷积加池化*2，全连接*2，softmax分类
 #卷积层1
