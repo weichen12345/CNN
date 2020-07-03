@@ -5,10 +5,10 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # 这一行注释掉就是使用cpu，
 #卷积神经网络，卷积加池化*2，全连接*2，softmax分类
 #卷积层1
 
-config = tf.ConfigProto(allow_soft_placement=True, allow_soft_placement=True)
-config.gpu_options.per_process_gpu_memory_fraction = 0.4  #占用40%显存
-sess = tf.Session(config=config)
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
 def inference(images, batch_size, n_classes):
     with tf.device('/gpu:0'):
     # with tf.Session() as sess, tf.device('/gpu:0'):
