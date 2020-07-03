@@ -14,7 +14,7 @@ BATCH_SIZE = 20
 CAPACITY = 200
 MAX_STEP = 15001  # 一般大于10K
 learning_rate = 0.0001  # 一般小于0.0001
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # 这一行注释掉就是使用cpu，不注释就是使用gpu
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # 这一行注释掉就是使用cpu，不注释就是使用gpu
 
 # 获取批次batch
 # train_dir = r'D:\MyProjects\inpute_date_2'  # 训练样本的读入路径
