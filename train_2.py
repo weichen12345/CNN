@@ -12,7 +12,7 @@ label = index.index()
 N_CLASSES = len(label) # 四种花类型
 IMG_W = 112  # resize图像，太大的话训练时间久
 IMG_H = 112
-BATCH_SIZE = 200
+BATCH_SIZE = 20
 CAPACITY = 200
 MAX_STEP = 15001  # 一般大于10K
 learning_rate = 0.0001  # 一般小于0.0001
@@ -70,7 +70,7 @@ try:
         _, test_loss1, test_acc1 = sess.run([test_op, test_loss, test_acc])
 
         # 每隔50步打印一次当前的loss以及acc，同时记录log，写入writer
-        if step % 10 == 0:
+        if step % 1 == 0:
             print('Step %d, train loss = %.2f, train accuracy = %.2f%%' % (step, tra_loss, tra_acc1 * 100.0))
             print('step %d,test loss = %.2f,test accuracy = %.2f%%' % (step, test_loss1, test_acc1 * 100))
 
