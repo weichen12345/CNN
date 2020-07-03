@@ -10,7 +10,8 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 def inference(images, batch_size, n_classes):
-    with tf.device('/gpu:0'):
+    if True:
+    # with tf.device('/gpu:0'):
     # with tf.Session() as sess, tf.device('/gpu:0'):
         with tf.variable_scope('conv1') as scope:
             weights = tf.Variable(tf.truncated_normal(shape=[3,3,3,64],stddev=1.0,dtype=tf.float32),
