@@ -12,7 +12,7 @@ label = index.index()
 N_CLASSES = len(label) # 四种花类型
 IMG_W = 112  # resize图像，太大的话训练时间久
 IMG_H = 112
-BATCH_SIZE = 200
+BATCH_SIZE = 1024
 
 CAPACITY = 200
 MAX_STEP = 15001  # 一般大于10K
