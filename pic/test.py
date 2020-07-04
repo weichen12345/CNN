@@ -59,12 +59,12 @@ def VGG(weights_path=None):
 
 
 # model = load_model('.\\model\\model-90.h5')
-model = load_model('./model-1/model-50.h5')
+model = load_model('./model/model-20.h5')
 # model = VGG()
 # model.load_weights('./model/model-78.h5')
 # model = multi_gpu_model(model, gpus=2)
 # model = load_model('.\\model\\model-old.h5')
-imgList = os.listdir('/home/rsd/image/image_word')
+imgList = os.listdir('./test')
 # with open('data-239.json','r',encoding='utf8') as f:
 with open('./data/data.json','r',encoding='utf8') as f:
 # with open('.\data\data-old.json','r',encoding='utf8') as f:
@@ -77,13 +77,13 @@ wordDict = {v:k for k,v in res.items()}
 accNum = 0
 
 for num, imgName in enumerate(imgList):
-    imgPath = '/home/rsd/image/image_word/' + imgName
-    # print(imgPath)
+    imgPath = './test/' + imgName
+    print(imgPath)
     # img = image.load_img(imgPath, target_size=(64,64),grayscale=True)
     img = image.load_img(imgPath, target_size=(64,64),grayscale=False)
     imgArray = image.img_to_array(img)
     imgInput = np.expand_dims(imgArray, 0)
-    print(imgName[0])
+    # print(imgName[0])
     res = model.predict(imgInput)
     resList = list(res[0])
     # print(num)
@@ -94,9 +94,12 @@ for num, imgName in enumerate(imgList):
     b = sorted(enumerate(resList), key=lambda x: x[1], reverse=True)
     print(b)
     wordIndex = b[0][0]
-    wordPred = wordDict[wordIndex]
-    print(wordPred)
-    if wordPred == imgName[0]:
+    # wordPred = wordDict[wordIndex]
+    # print(wordPred)
+    # if wordPred == imgName.split('_')[0]:
+    print(wordIndex)
+    print(imgName)
+    if wordIndex == int(imgName.split('_')[0]):
         accNum += 1
     print('accuracy: ',accNum/(num+1))
     print('@'*100)

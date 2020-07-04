@@ -3,7 +3,7 @@
 
 import os
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-
+import time
 from keras.models import Sequential, load_model
 from keras.layers import BatchNormalization
 from keras.layers.convolutional import Conv2D
@@ -30,17 +30,17 @@ def VGG(weights_path=None):
     # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     # model.add(BatchNormalization())
     # model.add(Dropout(0.1))
-    model.add(Conv2D(64, (3, 3), activation='relu', padding="same",  input_shape=(PATCH_SIZE, PATCH_SIZE, 3)))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding="same",  input_shape=(PATCH_SIZE, PATCH_SIZE, 3)))
     # model.add(Conv2D(64, (3, 3), activation='relu', padding="same",name='conv2d_1'))
-    model.add(Conv2D(64, (3, 3), activation='relu', padding="same"))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     model.add(BatchNormalization())
     model.add(Dropout(0.1))
-    model.add(Conv2D(128, (3, 3), activation='relu', padding="same"))
-    model.add(Conv2D(128, (3, 3), activation='relu', padding="same"))
-    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.1))
+    # model.add(Conv2D(128, (3, 3), activation='relu', padding="same"))
+    # model.add(Conv2D(128, (3, 3), activation='relu', padding="same"))
+    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    # model.add(BatchNormalization())
+    # model.add(Dropout(0.1))
     model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
     model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
@@ -54,7 +54,7 @@ def VGG(weights_path=None):
 
     model.add(Flatten())
     # model.add(Dense(2048, activation='relu',kernel_regularizer=regularizers.l1(0.01),activity_regularizer=regularizers.l1(0.01)))
-    model.add(Dense(2048, activation='relu'))
+    model.add(Dense(256, activation='relu'))
     # model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(NB_CLASSES, activation='softmax'))
@@ -64,7 +64,7 @@ def VGG(weights_path=None):
     return model
 
 PATCH_SIZE = 64
-NB_EPOCH = 30
+NB_EPOCH = 25
 BATCH_SIZE = 256
 VERBOSE = 1
 OPTIMIZER = Adam(lr=0.001)
@@ -77,7 +77,7 @@ MODEL_DIR = os.path.join(ROOT_PATH, "model")
 # MODEL_DIR = "D:\picmodel"
 TRAIN_DIR = os.path.join(ROOT_PATH, "train")
 # TRAIN_DIR = os.path.join(ROOT_PATH, "image_geetest_train")
-TRAIN_CNT = 11540
+TRAIN_CNT = 11540 -1094
 # TRAIN_CNT = 129288
 
 # keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
@@ -116,7 +116,8 @@ train_generator = train_datagen.flow_from_directory(
     # color_mode='grayscale'
 )
 dic = train_generator.class_indices
-# print(train_generator.class_indices)
+print(train_generator.class_indices)
+# time.sleep(1000)
 with open('.\data\data.json','w',encoding='utf-8') as f:
     a = json.dumps(dic,ensure_ascii=False)
     f.write(a)
