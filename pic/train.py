@@ -118,7 +118,7 @@ train_generator = train_datagen.flow_from_directory(
 dic = train_generator.class_indices
 print(train_generator.class_indices)
 # time.sleep(1000)
-with open('.\data\data.json','w',encoding='utf-8') as f:
+with open(os.path.join(os.getcwd(), "data",'data.json'),'w',encoding='utf-8') as f:
     a = json.dumps(dic,ensure_ascii=False)
     f.write(a)
 print(train_generator.classes)
