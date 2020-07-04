@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 from keras.models import Sequential, load_model
 from keras.layers import BatchNormalization
@@ -64,7 +64,7 @@ def VGG(weights_path=None):
     return model
 
 PATCH_SIZE = 64
-NB_EPOCH = 10
+NB_EPOCH = 30
 BATCH_SIZE = 256
 VERBOSE = 1
 OPTIMIZER = Adam(lr=0.001)
@@ -141,3 +141,4 @@ model.fit_generator(
         epochs=NB_EPOCH,
         verbose=VERBOSE, 
         callbacks=[checkpoint])
+

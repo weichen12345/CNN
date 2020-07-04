@@ -13,8 +13,8 @@ for name in pic_names:
 	img = cv2.imread(fpath)
 	print(img)
 	[sort,num] = name.split('_')
-
 	if not os.path.exists(os.path.join(train_path, sort)):
 		os.mkdir(os.path.join(train_path, sort))
 	p = os.path.join(train_path, sort, num)
 	cv2.imencode('.jpg', img)[1].tofile(p)
+
