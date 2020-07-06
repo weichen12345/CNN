@@ -30,7 +30,8 @@ def VGG(weights_path=None):
     # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     # model.add(BatchNormalization())
     # model.add(Dropout(0.1))
-    model.add(Conv2D(64, (3, 3), activation='relu', padding="same",  input_shape=(PATCH_SIZE, PATCH_SIZE, 3)))
+    # model.add(Conv2D(64, (3, 3), activation='relu', padding="same",  input_shape=(PATCH_SIZE, PATCH_SIZE, 3)))
+    model.add(Conv2D(64, (3, 3), activation='relu', padding="same",  input_shape=(PATCH_SIZE, PATCH_SIZE, 1)))
     # model.add(Conv2D(64, (3, 3), activation='relu', padding="same",name='conv2d_1'))
     model.add(Conv2D(64, (3, 3), activation='relu', padding="same"))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
@@ -46,7 +47,7 @@ def VGG(weights_path=None):
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     model.add(BatchNormalization())
     model.add(Dropout(0.2))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding="same"))
+    # model.add(Conv2D(512, (3, 3), activation='relu', padding="same"))
     model.add(Conv2D(512, (3, 3), activation='relu', padding="same"))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     model.add(BatchNormalization())
@@ -64,10 +65,10 @@ def VGG(weights_path=None):
     return model
 
 PATCH_SIZE = 64
-NB_EPOCH = 20
+NB_EPOCH = 10
 BATCH_SIZE = 128
 VERBOSE = 1
-OPTIMIZER = Adam(lr=0.001)
+OPTIMIZER = Adam(lr=0.00001)
 NB_CLASSES = 143
 # NB_CLASSES = 3405
 # INPUT_SHAPE = (PATCH_SIZE, PATCH_SIZE, 1)
@@ -101,11 +102,11 @@ TRAIN_CNT = 11540 -1094
 #     data_format=K.image_data_format())
 
 train_datagen = ImageDataGenerator(
-    # shear_range=30.,
-    width_shift_range=0.05,
-    height_shift_range=0.05,
-    # rotation_range=10.,
-    zoom_range=[0.95,1.05],
+    # shear_range=20.,
+    width_shift_range=0.15,
+    height_shift_range=0.15,
+    rotation_range=10.,
+    zoom_range=[0.9,1.1],
     rescale=1./255
     )
 train_generator = train_datagen.flow_from_directory(
@@ -113,7 +114,7 @@ train_generator = train_datagen.flow_from_directory(
         target_size=(64,64),
         class_mode='categorical',
         batch_size=BATCH_SIZE,
-    # color_mode='grayscale'
+    color_mode='grayscale'
 )
 dic = train_generator.class_indices
 print(train_generator.class_indices)
@@ -132,6 +133,7 @@ print(train_generator.class_mode)
 # print('models summary:',modelOld.summary())
 model = VGG()
 # model.load_weights('C:\code\captfr\picchar\model\model-old.h5',by_name=True)
+model.load_weights(os.path.join(os.getcwd(),'model','model.h5'))
 model.compile(loss="categorical_crossentropy", optimizer=OPTIMIZER, metrics=["accuracy"])
 model.summary()
 # checkpoint = ModelCheckpoint(filepath=os.path.join(MODEL_DIR, "model-{epoch:02d}.h5"))

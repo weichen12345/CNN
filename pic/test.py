@@ -70,7 +70,8 @@ with open('./data/data.json','r',encoding='utf8') as f:
 # with open('.\data\data-old.json','r',encoding='utf8') as f:
     r = f.readline()
     res = json.loads(r)
-    # print(res)
+    print(res)
+    # time.sleep(10)
 wordDict = {v:k for k,v in res.items()}
 # print(wordDict)
 # time.sleep(1000)
@@ -79,8 +80,8 @@ accNum = 0
 for num, imgName in enumerate(imgList):
     imgPath = './test/' + imgName
     print(imgPath)
-    # img = image.load_img(imgPath, target_size=(64,64),grayscale=True)
-    img = image.load_img(imgPath, target_size=(64,64),grayscale=False)
+    img = image.load_img(imgPath, target_size=(64,64),grayscale=True)
+    # img = image.load_img(imgPath, target_size=(64,64),grayscale=False)
     imgArray = image.img_to_array(img)
     imgInput = np.expand_dims(imgArray, 0)
     # print(imgName[0])
@@ -94,10 +95,10 @@ for num, imgName in enumerate(imgList):
     b = sorted(enumerate(resList), key=lambda x: x[1], reverse=True)
     print(b)
     wordIndex = b[0][0]
-    # wordPred = wordDict[wordIndex]
-    for k,v in wordDict.items():
-        if int(v) == int(wordIndex):
-            wordPred = k
+    wordPred = wordDict[wordIndex]
+    # for k,v in wordDict.items():
+    #     if int(v) == int(wordIndex):
+    #         wordPred = k
     print(wordPred)
     # if wordPred == imgName.split('_')[0]:
     # print(wordIndex)
