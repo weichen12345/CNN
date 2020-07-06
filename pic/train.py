@@ -30,33 +30,33 @@ def VGG(weights_path=None):
     # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     # model.add(BatchNormalization())
     # model.add(Dropout(0.1))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding="same",  input_shape=(PATCH_SIZE, PATCH_SIZE, 3)))
+    model.add(Conv2D(64, (3, 3), activation='relu', padding="same",  input_shape=(PATCH_SIZE, PATCH_SIZE, 3)))
     # model.add(Conv2D(64, (3, 3), activation='relu', padding="same",name='conv2d_1'))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
+    model.add(Conv2D(64, (3, 3), activation='relu', padding="same"))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     model.add(BatchNormalization())
-    model.add(Dropout(0.1))
+    model.add(Dropout(0.2))
+    model.add(Conv2D(128, (3, 3), activation='relu', padding="same"))
     # model.add(Conv2D(128, (3, 3), activation='relu', padding="same"))
-    # model.add(Conv2D(128, (3, 3), activation='relu', padding="same"))
-    # model.add(MaxPooling2D((2, 2), strides=(2, 2)))
-    # model.add(BatchNormalization())
-    # model.add(Dropout(0.1))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     model.add(BatchNormalization())
-    model.add(Dropout(0.1))
+    model.add(Dropout(0.2))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
+    # model.add(Conv2D(256, (3, 3), activation='relu', padding="same"))
+    model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.2))
     model.add(Conv2D(512, (3, 3), activation='relu', padding="same"))
     model.add(Conv2D(512, (3, 3), activation='relu', padding="same"))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
     model.add(BatchNormalization())
-    model.add(Dropout(0.1))
+    model.add(Dropout(0.2))
 
     model.add(Flatten())
     # model.add(Dense(2048, activation='relu',kernel_regularizer=regularizers.l1(0.01),activity_regularizer=regularizers.l1(0.01)))
     model.add(Dense(256, activation='relu'))
     # model.add(Dense(512, activation='relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.4))
     model.add(Dense(NB_CLASSES, activation='softmax'))
     
     if weights_path:
@@ -64,8 +64,8 @@ def VGG(weights_path=None):
     return model
 
 PATCH_SIZE = 64
-NB_EPOCH = 25
-BATCH_SIZE = 256
+NB_EPOCH = 20
+BATCH_SIZE = 128
 VERBOSE = 1
 OPTIMIZER = Adam(lr=0.001)
 NB_CLASSES = 143
@@ -102,10 +102,10 @@ TRAIN_CNT = 11540 -1094
 
 train_datagen = ImageDataGenerator(
     # shear_range=30.,
-    # width_shift_range=0.1,
-    # height_shift_range=0.1,
+    width_shift_range=0.05,
+    height_shift_range=0.05,
     # rotation_range=10.,
-    # zoom_range=[0.9,1.1],
+    zoom_range=[0.95,1.05],
     rescale=1./255
     )
 train_generator = train_datagen.flow_from_directory(

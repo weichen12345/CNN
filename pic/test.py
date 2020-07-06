@@ -59,7 +59,7 @@ def VGG(weights_path=None):
 
 
 # model = load_model('.\\model\\model-90.h5')
-model = load_model('./model/model-20.h5')
+model = load_model('./model/model.h5')
 # model = VGG()
 # model.load_weights('./model/model-78.h5')
 # model = multi_gpu_model(model, gpus=2)
@@ -95,11 +95,16 @@ for num, imgName in enumerate(imgList):
     print(b)
     wordIndex = b[0][0]
     # wordPred = wordDict[wordIndex]
-    # print(wordPred)
+    for k,v in wordDict.items():
+        if int(v) == int(wordIndex):
+            wordPred = k
+    print(wordPred)
     # if wordPred == imgName.split('_')[0]:
-    print(wordIndex)
+    # print(wordIndex)
     print(imgName)
-    if wordIndex == int(imgName.split('_')[0]):
+    print(int(imgName.split('_')[0]))
+    # if wordIndex == int(imgName.split('_')[0]):
+    if int(wordPred) == int(imgName.split('_')[0]):
         accNum += 1
     print('accuracy: ',accNum/(num+1))
     print('@'*100)
